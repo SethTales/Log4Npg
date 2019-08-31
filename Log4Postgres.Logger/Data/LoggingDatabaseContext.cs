@@ -16,7 +16,7 @@ namespace Log4Postgres.Logger.Data
         {
             builder
                 .Entity<LogEntry>()
-                .Property(l => l.Log)
+                .Property(l => l.Message)
                 .HasColumnType("jsonb");
         }
     }

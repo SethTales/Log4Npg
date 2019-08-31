@@ -7,6 +7,6 @@ namespace Log4Postgres.Models
         public long LogEntryId {get; set;}
         public LogLevel Level {get; set;}
         public DateTime EventTime {get; set;}
-        public string Log {get; set;}
+        public string Message {get; set;}
     }
 }

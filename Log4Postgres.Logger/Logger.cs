@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 using Log4Postgres.Models;
 using Log4Postgres.Logger.Data;
@@ -13,25 +14,36 @@ namespace Log4Postgres.Logger
             _loggingRepository = loggingRepository;
         }
 
-        public async Task LogDebug(string message)
+        public async Task LogDebug(object message)
+        {
+            var logEntry = BuildLogEntry(message, LogLevel.Debug);
+            await _loggingRepository.AddLogEntryAsync(logEntry);
+        }
+        public async Task LogInfo(object message)
         {
             throw new NotImplementedException();
         }
-        public async Task LogInfo(string message)
+        public async Task LogWarning(object message)
         {
             throw new NotImplementedException();
         }
-        public async Task LogWarning(string message)
+        public async Task LogError(object message)
         {
             throw new NotImplementedException();
         }
-        public async Task LogError(string message)
+        public async Task LogFatal(object message)
         {
             throw new NotImplementedException();
         }
-        public async Task LogFatal(string message)
+
+        private LogEntry BuildLogEntry(object message, LogLevel level)
         {
-            throw new NotImplementedException();
+            return new LogEntry
+            {
+                Level = level,
+                EventTime = DateTime.UtcNow,
+                Message = JsonConvert.SerializeObject(message)
+            };
         }
     }
 }

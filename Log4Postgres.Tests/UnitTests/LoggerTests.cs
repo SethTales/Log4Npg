@@ -23,9 +23,10 @@ namespace Log4Postgres.Tests.UnitTests
         [Test]
         public async Task LogDebug_CallsLoggingRepositoryMethod()
         {
-            var logMessage = "this is a test log message";
+            var logMessage = "this is a test message";
             await _logger.LogDebug(logMessage);
-            await _loggingResitory.Received(1).AddLogEntryAsync(Arg.Any<LogEntry>());
+            await _loggingResitory.Received(1).AddLogEntryAsync(Arg.Is<LogEntry>(x =>
+                x.Level == LogLevel.Debug));
         }
 
     }

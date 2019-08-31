@@ -4,10 +4,10 @@ namespace Log4Postgres
 {
     public interface ILogger
     {
-        Task LogDebug(string message);
-        Task LogInfo(string message);
-        Task LogWarning(string message);
-        Task LogError(string message);
-        Task LogFatal(string message);
+        Task LogDebug(object message);
+        Task LogInfo(object message);
+        Task LogWarning(object message);
+        Task LogError(object message);
+        Task LogFatal(object message);
     }
 }
