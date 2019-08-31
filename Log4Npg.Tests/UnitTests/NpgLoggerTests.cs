@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace Log4Npg.Tests.UnitTests
 {
     [TestFixture]
-    public class LoggerTests
+    public class NpgLoggerTests
     {
         private ILoggingRepository _loggingResitory;
         private INpgLogger _defaultLogger;

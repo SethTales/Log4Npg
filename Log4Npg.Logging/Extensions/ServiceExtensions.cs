@@ -6,7 +6,7 @@ namespace Log4Npg.Logging.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void AddLoggingScoped(this IServiceCollection services, string connectionString)
+        public static void AddNpgLoggerScoped(this IServiceCollection services, string connectionString)
         {
             services
                 .AddEntityFrameworkNpgsql()
