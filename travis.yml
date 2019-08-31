@@ -1,4 +1,6 @@
 language: csharp
+mono: none
+dist: xenial
 solution: Log4Npg.sln
 dotnet: 2.2
 script:
