@@ -1,0 +1,7 @@
+language: csharp
+solution: Log4Npg.sln
+dotnet: 2.2.0
+script:
+  - dotnet clean
+  - dotnet restore
+  - dotnet test
