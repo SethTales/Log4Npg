@@ -19,13 +19,19 @@ namespace Log4Npg.Tests.UnitTests
             _logger = new NpgLogger(_loggingResitory);
         }
 
-        [Test]
-        public void LogDebug_CallsLoggingRepositoryMethod()
+        [TestCase("LogDebug", LogLevel.Debug)]
+        [TestCase("LogInfo", LogLevel.Info)]
+        [TestCase("LogWarning", LogLevel.Warn)]
+        [TestCase("LogError", LogLevel.Error)]
+        [TestCase("LogFatal", LogLevel.Fatal)]
+        public void EachLoggingMethod_CallsLoggingRepository_WithCorrectLogLevelEnum(string methodName, LogLevel level)
         {
+            var type = _logger.GetType();
+            var logMethod = type.GetMethod(methodName);
             var logMessage = "this is a test message";
-            _logger.LogDebug(logMessage);
+            logMethod.Invoke(_logger, new object[] {logMessage});
             _loggingResitory.Received(1).AddLogEntry(Arg.Is<LogEntry>(x =>
-                x.Level == LogLevel.Debug));
+                x.Level == level));
         }
 
     }

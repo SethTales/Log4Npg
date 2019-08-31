@@ -20,19 +20,23 @@ namespace Log4Npg.Logging
         }
         public void LogInfo(object message)
         {
-            throw new NotImplementedException();
+            var logEntry = BuildLogEntry(message, LogLevel.Info);
+            _loggingRepository.AddLogEntry(logEntry);
         }
         public void LogWarning(object message)
         {
-            throw new NotImplementedException();
+            var logEntry = BuildLogEntry(message, LogLevel.Warn);
+            _loggingRepository.AddLogEntry(logEntry);
         }
         public void LogError(object message)
         {
-            throw new NotImplementedException();
+            var logEntry = BuildLogEntry(message, LogLevel.Error);
+            _loggingRepository.AddLogEntry(logEntry);
         }
         public void LogFatal(object message)
         {
-            throw new NotImplementedException();
+            var logEntry = BuildLogEntry(message, LogLevel.Fatal);
+            _loggingRepository.AddLogEntry(logEntry);
         }
 
         private LogEntry BuildLogEntry(object message, LogLevel level)
