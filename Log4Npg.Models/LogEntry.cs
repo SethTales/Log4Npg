@@ -1,6 +1,6 @@
 using System;
 
-namespace Log4Postgres.Models
+namespace Log4Npg.Models
 {
     public class LogEntry
     {

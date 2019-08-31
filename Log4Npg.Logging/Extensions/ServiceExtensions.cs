@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Log4Postgres.Logger.Data;
+using Log4Npg.Logging.Data;
 
-namespace Log4Postgres.Logger.Extensions
+namespace Log4Npg.Logging.Extensions
 {
     public static class ServiceExtensions
     {
@@ -13,7 +13,7 @@ namespace Log4Postgres.Logger.Extensions
                 .AddDbContext<LoggingDatabaseContext>(options =>
                     options.UseNpgsql(connectionString));
             services.AddScoped<ILoggingRepository, LoggingRepository>();
-            services.AddScoped<ILogger, PLogger>();
+            services.AddScoped<INpgLogger, NpgLogger>();
         }
     }
 }

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Log4Postgres.Models;
+using Log4Npg.Models;
 
-namespace Log4Postgres.Logger.Data
+namespace Log4Npg.Logging.Data
 {
     public class LoggingDatabaseContext : DbContext
     {

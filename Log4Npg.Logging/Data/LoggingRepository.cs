@@ -1,7 +1,6 @@
-using Log4Postgres.Models;
-using System.Threading.Tasks;
+using Log4Npg.Models;
 
-namespace Log4Postgres.Logger.Data
+namespace Log4Npg.Logging.Data
 {
     public class LoggingRepository : ILoggingRepository
     {
@@ -12,10 +11,10 @@ namespace Log4Postgres.Logger.Data
             _dbContext = dbContext;
         }
 
-        public async Task AddLogEntryAsync(LogEntry logEntry)
+        public void AddLogEntry(LogEntry logEntry)
         {
-            await _dbContext.LogEntries.AddAsync(logEntry);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.LogEntries.Add(logEntry);
+            _dbContext.SaveChanges();
         }
     }
 }

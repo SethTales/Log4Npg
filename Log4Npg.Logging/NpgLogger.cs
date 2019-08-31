@@ -1,37 +1,36 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Threading.Tasks;
-using Log4Postgres.Models;
-using Log4Postgres.Logger.Data;
+using Log4Npg.Models;
+using Log4Npg.Logging.Data;
 
-namespace Log4Postgres.Logger
+namespace Log4Npg.Logging
 {
-    public class PLogger : ILogger
+    public class NpgLogger : INpgLogger
     {
         private readonly ILoggingRepository _loggingRepository;
-        public PLogger(ILoggingRepository loggingRepository)
+        public NpgLogger(ILoggingRepository loggingRepository)
         {
             _loggingRepository = loggingRepository;
         }
 
-        public async Task LogDebug(object message)
+        public void LogDebug(object message)
         {
             var logEntry = BuildLogEntry(message, LogLevel.Debug);
-            await _loggingRepository.AddLogEntryAsync(logEntry);
+            _loggingRepository.AddLogEntry(logEntry);
         }
-        public async Task LogInfo(object message)
+        public void LogInfo(object message)
         {
             throw new NotImplementedException();
         }
-        public async Task LogWarning(object message)
+        public void LogWarning(object message)
         {
             throw new NotImplementedException();
         }
-        public async Task LogError(object message)
+        public void LogError(object message)
         {
             throw new NotImplementedException();
         }
-        public async Task LogFatal(object message)
+        public void LogFatal(object message)
         {
             throw new NotImplementedException();
         }

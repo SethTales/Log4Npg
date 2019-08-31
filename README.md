@@ -1,4 +1,4 @@
-# Log4Postgres
+# Log4Npg
 
 This repository is a C# nuget pacakge for using PostgreSQL as a logging database. It provides a class to write log messages in JSON to a Postgres database. It supports the standard log levels - debug, info, warn, error and fatal. The motiviation for this package is to provide a simple and reusable logging package for personal web development projects, which doesn't rely on complex logging stacks that are unnecessary for small projects. 
 

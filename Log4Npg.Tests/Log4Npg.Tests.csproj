@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Log4Postgres.Logger\Log4Postgres.Logger.csproj" />
-    <ProjectReference Include="..\Log4Postgres.Models\Log4Postgres.Models.csproj" />
+    <ProjectReference Include="..\Log4Npg.Logging\Log4Npg.Logging.csproj" />
+    <ProjectReference Include="..\Log4Npg.Models\Log4Npg.Models.csproj" />
   </ItemGroup>
 
 </Project>
