@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ductus.FluentDocker" Version="2.7.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="NSubstitute" Version="4.2.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
@@ -16,6 +17,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Log4Npg.Logging\Log4Npg.Logging.csproj" />
     <ProjectReference Include="..\Log4Npg.Models\Log4Npg.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="./Scripts/create_test_db.sh" CopyToOutputDirectory="Always" />
+    <None Update="./Scripts/teardown_test_db.sh" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Log4Npg.Models;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Log4Npg.Logging.Data
 {

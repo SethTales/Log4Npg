@@ -62,6 +62,7 @@ namespace Log4Npg.Logging
 
         private LogEntry BuildLogEntry(object message, LogLevel level)
         {
+            var json = JsonConvert.SerializeObject(message);
             return new LogEntry
             {
                 Level = level,
