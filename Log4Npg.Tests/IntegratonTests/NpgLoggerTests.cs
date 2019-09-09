@@ -1,56 +1,69 @@
-using Ductus.FluentDocker;
-using Ductus.FluentDocker.Builders;
-using Ductus.FluentDocker.Services;
 using NUnit.Framework;
 using Log4Npg.Logging.Data;
-using Log4Npg.Logging.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.IO;
-using System.Diagnostics;
+using Log4Npg.Models;
+using Newtonsoft.Json;
+using Log4Npg.Logging;
 
 namespace Log4Npg.Tests.IntegrationTests
 {
     public class NpgLoggerTests
     {
-        private ICompositeService _container;
-        private TestDatabaseContext _dbContext;
         private ILoggingRepository _loggingRepository;
         private INpgLogger _npgLogger;
-        private ServiceCollection _services;
-        private const string TestConnectionString = "User ID=postgres;Password=postgres;server=localhost;Port=5432";
+        private TestDatabaseContext _testDbContext;
+        private const string TestConnectionString = "User ID=root;Password=password;server=localhost;Port=5432;Database=Log4NpgTestDatabase";
 
 
         [OneTimeSetUp]
         public void InitTestFixture()
-        {
-            var info = new ProcessStartInfo("bash", $"{Path.Combine(Directory.GetCurrentDirectory(), "Scripts/create_test_db.sh")}");
-            Process p = Process.Start(info);
-            p.WaitForExit();
-            
+        {           
             var optionsBuilder = new DbContextOptionsBuilder<LoggingDatabaseContext>();
             optionsBuilder.UseNpgsql(TestConnectionString);
+            _testDbContext = new TestDatabaseContext(optionsBuilder.Options);
+            _loggingRepository = new LoggingRepository(_testDbContext);
+            _npgLogger = new NpgLogger(_loggingRepository, LogLevel.All);           
+        }
 
-            using (var context = new TestDatabaseContext(optionsBuilder.Options))
+        [TearDown]
+        public void Cleanup()
+        {
+            _testDbContext.DeleteTestData(new [] { "\"LogEntries\"" });
+        }
+
+        [TestCase("LogDebug", LogLevel.Debug, 1)]
+        [TestCase("LogInfo", LogLevel.Info, 2)]
+        [TestCase("LogWarning", LogLevel.Warn, 3)]
+        [TestCase("LogError", LogLevel.Error, 4)]
+        [TestCase("LogFatal", LogLevel.Fatal, 5)]
+        public void AddLogEntryWorks_AtEachLogLevel(string methodName, LogLevel level, int logId)
+        {
+            var type = _npgLogger.GetType();
+            var logMethod = type.GetMethod(methodName);
+            var logMessage = new TestLogMessage
             {
-                context.ExecuteDatabaseMigration();
-            }
+                Id = 1,
+                Name = "TestLogMessage",
+                Source = "Log4NpgIntegrationTests"
+            };
+
+            logMethod.Invoke(_npgLogger, new object[] {logMessage});
+
+            var addedLogEntry = _testDbContext.FindLogEntryById(logId);
+            var addedLogMessage = JsonConvert.DeserializeObject<TestLogMessage>(addedLogEntry.Message);
+
+            Assert.AreEqual(level, addedLogEntry.Level);
+            Assert.AreEqual(logMessage.Id, addedLogMessage.Id);
+            Assert.AreEqual(logMessage.Name, addedLogMessage.Name);
+            Assert.AreEqual(logMessage.Source, addedLogMessage.Source);
         }
 
-        [OneTimeTearDown]
-        public void TearDownTestFixture()
+        public class TestLogMessage
         {
-            var info = new ProcessStartInfo("bash", $"{Path.Combine(Directory.GetCurrentDirectory(), "Scripts/teardown_test_db.sh")}");
-            Process p = Process.Start(info);
-            p.WaitForExit();
+            public int Id {get; set;}
+            public string Name {get; set;}
+            public string Source {get; set;}
         }
-
-        [Test]
-        public void IntegrationFixtureWorks()
-        {
-            Assert.AreEqual(0, 0);
-        }
-
         
     }
 }
