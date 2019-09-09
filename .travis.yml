@@ -4,6 +4,5 @@ sudo: required
 dist: xenial
 dotnet: 2.2
 script:
-  - pwd
-  - ls
-  - bash ./Scripts/run_tests.sh
+  - cd Scripts
+  - bash ./run_tests.sh
