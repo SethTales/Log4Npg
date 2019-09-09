@@ -4,6 +4,6 @@ namespace Log4Npg.Logging.Data
 {
     public interface ILoggingRepository
     {
-        LogEntry AddLogEntry(LogEntry logEntry);
+        void AddLogEntry(LogEntry logEntry);
     }
 }

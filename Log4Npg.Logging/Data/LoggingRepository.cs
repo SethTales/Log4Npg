@@ -11,11 +11,10 @@ namespace Log4Npg.Logging.Data
             _dbContext = dbContext;
         }
 
-        public LogEntry AddLogEntry(LogEntry logEntry)
+        public void AddLogEntry(LogEntry logEntry)
         {
-            var addedEntry = _dbContext.LogEntries.Add(logEntry);
+            _dbContext.LogEntries.Add(logEntry);
             _dbContext.SaveChanges();
-            return addedEntry.Entity;
         }
     }
 }
