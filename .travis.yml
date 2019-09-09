@@ -4,6 +4,4 @@ sudo: required
 dist: xenial
 dotnet: 2.2
 script:
-  - dotnet clean
-  - dotnet restore
-  - dotnet test
+ - ./Scripts/run_tests.sh
